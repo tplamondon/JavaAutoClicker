@@ -1,4 +1,4 @@
-package nekofactory.autoclicker;
+package autoclicker;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -12,7 +12,7 @@ public class Main {
 		
 		//https://www.chilkatsoft.com/java-loadlibrary-windows.asp
 		try {
-	    	File file = new File("src/Jintellitype.dll");
+			File file = new File("dll/Jintellitype.dll");
 	    	String pathLocation = file.getAbsolutePath();
 	    	System.load(pathLocation);
 	    	
