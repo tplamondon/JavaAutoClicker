@@ -2,14 +2,23 @@ package autoclicker;
 
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.util.Scanner;
 
 import com.melloware.jintellitype.HotkeyListener;
+import com.melloware.jintellitype.IntellitypeListener;
 import com.melloware.jintellitype.JIntellitype;
 
 
 public class Main {
 
 	
+	public static boolean isPaused = true;
+	public static int msPauseTime = -1;
+	
+	public static final int PAUSE = 1;
+	public static final int REDOTIMER = 2;
+	
+	public static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -30,7 +39,15 @@ public class Main {
 		if (!JIntellitype.isJIntellitypeSupported()) {
 			System.exit(1);
 		}
-	    
+		
+		//add a robot
+		Robot robot = null;
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
+
 		System.out.println("Succesfully loaded library");
 		
 
@@ -38,44 +55,74 @@ public class Main {
 		JIntellitype.getInstance().addHotKeyListener(new HotkeyListener(){
 			public void onHotKey(int aIdentifier) {
 				if(aIdentifier == 1){
-					System.out.println("WINDOWS+A hotkey pressed");
+					//System.out.println("WINDOWS+A hotkey pressed");
 				}	
-				if(aIdentifier == 2){
-					System.out.println("CTRL+ALT+P hotkey pressed");
+				if(aIdentifier == PAUSE){
+					//System.out.println("CTRL+ALT+P hotkey pressed");
+				}	
+				if(aIdentifier == REDOTIMER){
+					//System.out.println("CTRL+ALT+O hotkey pressed");
+					if(isPaused == false){
+						getTimerUpdated();
+					}
 				}	
 				System.out.println("WM_HOTKEY message received " + Integer.toString(aIdentifier));
 			}
 			
 		});
 		
-		/*JIntellitype.getInstance().addIntellitypeListener(new IntellitypeListener() {
+		JIntellitype.getInstance().addIntellitypeListener(new IntellitypeListener() {
 			public void onIntellitype(int aCommand) {
 		        switch (aCommand) {
 		            case JIntellitype.APPCOMMAND_MEDIA_PLAY_PAUSE:
-		                System.out.println("Play/Pause message received " + Integer.toString(aCommand));
+		                //System.out.println("Play/Pause message received " + Integer.toString(aCommand));
 		                break;
 		            case JIntellitype.MOD_WIN: //same as APPCOMMAND_VOLUME_MUTE?a
-		            	System.out.println("This is volume mute key for some reason on my keyboard");
+		            	//System.out.println("This is volume mute key for some reason on my keyboard");
 		            	break;
 		            default:
-		                System.out.println("Undefined INTELLITYPE message caught " + Integer.toString(aCommand));
+		                //System.out.println("Undefined INTELLITYPE message caught " + Integer.toString(aCommand));
 		                break;
 		        }
 			}
-		});*/
+		});
 		
-		JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_WIN, 'A');
-		JIntellitype.getInstance().registerHotKey(2, JIntellitype.MOD_CONTROL + JIntellitype.MOD_ALT, 'P');	
+		JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_WIN, 'O');
+		JIntellitype.getInstance().registerHotKey(PAUSE, JIntellitype.MOD_CONTROL + JIntellitype.MOD_ALT, 'P');	
+		JIntellitype.getInstance().registerHotKey(REDOTIMER, JIntellitype.MOD_CONTROL + JIntellitype.MOD_ALT, 'O');	
 		
 		System.out.println("Hotkeys registered");
 		
-		//add a robot
-		try {
-			Robot robot = new Robot();
-		} catch (AWTException e) {
-			e.printStackTrace();
-		}
+		System.out.println("CTRL+ALT+P to start/pause the clicker");
+		System.out.println("CTRL+ALT+O to redo the timer");
+		
+		getTimerUpdated();
+		
 		
 	}//end main method
+	
+	
+	public static void getTimerUpdated(){
+		System.out.println("Please enter the delay in ms (>0)");
+		boolean shouldContinue = true;
+		int a = -1;
+		while(shouldContinue == true){
+			if(scanner.hasNextInt() == true){
+				shouldContinue = false;
+				a = scanner.nextInt();
+				if(a<=0){
+					shouldContinue=true;
+					System.out.println("Please enter the delay in ms (>0)");
+				}
+			}
+			else{
+				System.out.println("Please enter the delay in ms (>0)");
+				shouldContinue = true;
+				scanner.next();
+			}
+		}
+		System.out.println("Thank you");
+		msPauseTime=a;
+	}
 
 }//end class
