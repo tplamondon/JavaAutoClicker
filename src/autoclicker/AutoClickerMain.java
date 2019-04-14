@@ -144,12 +144,12 @@ public class AutoClickerMain {
 		
 		//JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_WIN, 'O');
 		JIntellitype.getInstance().registerHotKey(PAUSE, JIntellitype.MOD_CONTROL + JIntellitype.MOD_ALT, 'P');	
+		JIntellitype.getInstance().registerHotKey(PAUSE, 0, ' ');	
 		JIntellitype.getInstance().registerHotKey(REDOTIMER, JIntellitype.MOD_CONTROL + JIntellitype.MOD_ALT, 'O');	
 		JIntellitype.getInstance().registerHotKey(EXIT, JIntellitype.MOD_CONTROL + JIntellitype.MOD_ALT, 'X');	
 		
 		System.out.println("Hotkeys registered");
-		
-		System.out.println("CTRL+ALT+P to start/pause the clicker");
+		System.out.println("CTRL+ALT+P or space to start/pause the clicker");
 		System.out.println("CTRL+ALT+O to redo the timer");
 		System.out.println("CTRL+ALT+X to exit");
 		
