@@ -2,6 +2,7 @@ package autoclicker;
 
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.util.Scanner;
 
 import com.melloware.jintellitype.HotkeyListener;
@@ -19,6 +20,7 @@ public class Main {
 	public static final int REDOTIMER = 2;
 	public static final int EXIT = 3;
 	
+	public static Robot robot = null;
 	public static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args) {
@@ -42,11 +44,12 @@ public class Main {
 		}
 		
 		//add a robot
-		Robot robot = null;
+		
 		try {
 			robot = new Robot();
 		} catch (AWTException e) {
-			e.printStackTrace();
+			System.err.println("Problem setting up auto-clicker");
+			System.exit(1);
 		}
 
 		System.out.println("Succesfully loaded library");
@@ -56,30 +59,35 @@ public class Main {
 		JIntellitype.getInstance().addHotKeyListener(new HotkeyListener(){
 			public void onHotKey(int aIdentifier) {
 				if(aIdentifier == PAUSE){
-					
+					isPaused = invertBoolean(isPaused);
 				}	
 				if(aIdentifier == REDOTIMER){
 					if(isPaused == true){
 						getTimerUpdated();
+						if(robot != null){
+							//robot.setAutoDelay(msPauseTime);
+						}
 					}
 				}
 				if(aIdentifier == EXIT){
+					JIntellitype.getInstance().unregisterHotKey(PAUSE);
+					JIntellitype.getInstance().unregisterHotKey(REDOTIMER);
+					JIntellitype.getInstance().unregisterHotKey(EXIT);
 					JIntellitype.getInstance().cleanUp();
 					System.out.println("Good-bye");
 					System.exit(0);
 				}
+				return;
 			}
-			
 		});
 		
 		JIntellitype.getInstance().addIntellitypeListener(new IntellitypeListener() {
 			public void onIntellitype(int aCommand) {
 		        switch (aCommand) {
 		            case JIntellitype.APPCOMMAND_MEDIA_PLAY_PAUSE:
-		                //System.out.println("Play/Pause message received " + Integer.toString(aCommand));
+		            	isPaused = invertBoolean(isPaused);
 		                break;
 		            case JIntellitype.MOD_WIN: //same as APPCOMMAND_VOLUME_MUTE?a
-		            	//System.out.println("This is volume mute key for some reason on my keyboard");
 		            	break;
 		            default:
 		                //System.out.println("Undefined INTELLITYPE message caught " + Integer.toString(aCommand));
@@ -100,14 +108,34 @@ public class Main {
 		System.out.println("CTRL+ALT+X to exit");
 		
 		getTimerUpdated();
-		
+		//robot.setAutoDelay(msPauseTime);
 		while(true){
-			
+			if(isPaused == false){
+				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+				robot.delay(5);
+				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+				robot.delay(msPauseTime);
+			}
+			else{
+				//Need this in otherwise it doesn't seem to be able to pause/unpause at this stage
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		
 	}//end main method
 	
+	public static boolean invertBoolean(boolean x){
+		if(x==true){
+			return false;
+		}
+		return true;
+	}
 	
 	public static void getTimerUpdated(){
 		System.out.println("Please enter the delay in ms (>0)");
