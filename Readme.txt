@@ -4,6 +4,8 @@ In Eclipse, right click your project > properties > Java Build Path > Libraries 
 Name it JIntellitype, add the Jar you download
 
 
+To run the executable once compiled (or runnable jar), the dll must be with it
+
 
 Another possibly library?
 https://github.com/kwhat/jnativehook
