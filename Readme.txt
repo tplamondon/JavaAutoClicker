@@ -1,5 +1,4 @@
-You will have to download JIntellitype.dll yourself and place in in /dll to compile this
+You will have to add the JIntellitype library yourself if you want this to run
 
-
-To add the dll folder
-https://stackoverflow.com/questions/11123274/add-dll-to-java-library-path-in-eclipse-pydev-jython-project
+In Eclipse, right click your project > properties > Java Build Path > Libraries > Add Library > Add User Library
+Name it JIntellitype, add the Jar you download
