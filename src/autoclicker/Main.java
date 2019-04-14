@@ -1,7 +1,9 @@
 package autoclicker;
 
 import java.io.File;
-import java.net.URISyntaxException;
+
+import com.melloware.jintellitype.JIntellitype;
+
 
 public class Main {
 
@@ -20,9 +22,10 @@ public class Main {
 	      System.err.println("Native code library failed to load.\n" + e);
 	      System.exit(1);
 	    }
+	    
 		System.out.println("Succesfully loaded library");
-		
-		
+
+		JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_WIN, (int)'A');
 	}//end main method
 
 }//end class
