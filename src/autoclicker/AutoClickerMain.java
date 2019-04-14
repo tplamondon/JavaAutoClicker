@@ -3,6 +3,13 @@ package autoclicker;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
 
 import com.melloware.jintellitype.HotkeyListener;
@@ -26,20 +33,45 @@ public class AutoClickerMain {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
+		InputStream stream = AutoClickerMain.class.getResourceAsStream("/dll/JIntellitype.dll");
+		Path path = Paths.get(System.getProperty("java.io.tmpdir")+"JIntellitype.dll");
+		System.out.println(stream);
+		System.out.println(path);
+		try {
+			
+			Files.copy(stream, path, StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
 		//https://www.chilkatsoft.com/java-loadlibrary-windows.asp
-		/*try {
+		try {
 			File file = new File("dll/Jintellitype.dll");
-	    	String pathLocation = file.getAbsolutePath();
-	    	System.load(pathLocation);
-	    	
-	    } catch (UnsatisfiedLinkError e) {
-	      System.err.println("Native code library failed to load.\n" + e);
-	      System.exit(1);
-	    }*/
+			String pathLocation = file.getAbsolutePath();
+			System.load(pathLocation);
+
+		} catch (UnsatisfiedLinkError e) {
+			System.err.println("Native code library failed to load.\n" + e);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			System.exit(1);
+	    }
 		
 		// next check to make sure JIntellitype DLL can be found and we are on
 		// a Windows operating System
 		if (!JIntellitype.isJIntellitypeSupported()) {
+			System.err.println("JIntellitype not supported");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			System.exit(1);
 		}
 		
@@ -49,6 +81,12 @@ public class AutoClickerMain {
 			robot = new Robot();
 		} catch (AWTException e) {
 			System.err.println("Problem setting up auto-clicker");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			System.exit(1);
 		}
 
