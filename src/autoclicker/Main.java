@@ -55,23 +55,19 @@ public class Main {
 		
 		JIntellitype.getInstance().addHotKeyListener(new HotkeyListener(){
 			public void onHotKey(int aIdentifier) {
-				if(aIdentifier == 1){
-					//System.out.println("WINDOWS+A hotkey pressed");
-				}	
 				if(aIdentifier == PAUSE){
-					//System.out.println("CTRL+ALT+P hotkey pressed");
+					
 				}	
 				if(aIdentifier == REDOTIMER){
-					//System.out.println("CTRL+ALT+O hotkey pressed");
-					if(isPaused == false){
+					if(isPaused == true){
 						getTimerUpdated();
 					}
 				}
 				if(aIdentifier == EXIT){
 					JIntellitype.getInstance().cleanUp();
+					System.out.println("Good-bye");
 					System.exit(0);
 				}
-				System.out.println("WM_HOTKEY message received " + Integer.toString(aIdentifier));
 			}
 			
 		});
