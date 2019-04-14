@@ -17,6 +17,7 @@ public class Main {
 	
 	public static final int PAUSE = 1;
 	public static final int REDOTIMER = 2;
+	public static final int EXIT = 3;
 	
 	public static Scanner scanner = new Scanner(System.in);
 	
@@ -65,7 +66,11 @@ public class Main {
 					if(isPaused == false){
 						getTimerUpdated();
 					}
-				}	
+				}
+				if(aIdentifier == EXIT){
+					JIntellitype.getInstance().cleanUp();
+					System.exit(0);
+				}
 				System.out.println("WM_HOTKEY message received " + Integer.toString(aIdentifier));
 			}
 			
@@ -87,16 +92,22 @@ public class Main {
 			}
 		});
 		
-		JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_WIN, 'O');
+		//JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_WIN, 'O');
 		JIntellitype.getInstance().registerHotKey(PAUSE, JIntellitype.MOD_CONTROL + JIntellitype.MOD_ALT, 'P');	
 		JIntellitype.getInstance().registerHotKey(REDOTIMER, JIntellitype.MOD_CONTROL + JIntellitype.MOD_ALT, 'O');	
+		JIntellitype.getInstance().registerHotKey(EXIT, JIntellitype.MOD_CONTROL + JIntellitype.MOD_ALT, 'X');	
 		
 		System.out.println("Hotkeys registered");
 		
 		System.out.println("CTRL+ALT+P to start/pause the clicker");
 		System.out.println("CTRL+ALT+O to redo the timer");
+		System.out.println("CTRL+ALT+X to exit");
 		
 		getTimerUpdated();
+		
+		while(true){
+			
+		}
 		
 		
 	}//end main method
