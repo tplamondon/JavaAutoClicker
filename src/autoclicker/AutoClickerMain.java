@@ -33,7 +33,7 @@ public class AutoClickerMain {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		InputStream stream = AutoClickerMain.class.getResourceAsStream("/autoclicker/JIntellitype.dll");
+		/*InputStream stream = AutoClickerMain.class.getResourceAsStream("/autoclicker/JIntellitype.dll");
 		Path path = Paths.get(System.getProperty("java.io.tmpdir")+"JIntellitype.dll");
 		//System.out.println(stream);
 		//System.out.println(path);
@@ -61,7 +61,7 @@ public class AutoClickerMain {
 				e1.printStackTrace();
 			}
 			System.exit(1);
-	    }
+	    }*/
 		
 		// next check to make sure JIntellitype DLL can be found and we are on
 		// a Windows operating System
