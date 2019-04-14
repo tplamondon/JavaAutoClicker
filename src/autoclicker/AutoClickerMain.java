@@ -33,10 +33,10 @@ public class AutoClickerMain {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		InputStream stream = AutoClickerMain.class.getResourceAsStream("/dll/JIntellitype.dll");
+		InputStream stream = AutoClickerMain.class.getResourceAsStream("/autoclicker/JIntellitype.dll");
 		Path path = Paths.get(System.getProperty("java.io.tmpdir")+"JIntellitype.dll");
-		System.out.println(stream);
-		System.out.println(path);
+		//System.out.println(stream);
+		//System.out.println(path);
 		try {
 			
 			Files.copy(stream, path, StandardCopyOption.REPLACE_EXISTING);
@@ -44,10 +44,11 @@ public class AutoClickerMain {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
+		System.out.println("Finished writing dll to disk");
 		
 		//https://www.chilkatsoft.com/java-loadlibrary-windows.asp
 		try {
-			File file = new File("dll/Jintellitype.dll");
+			File file = new File(System.getProperty("java.io.tmpdir")+"JIntellitype.dll");
 			String pathLocation = file.getAbsolutePath();
 			System.load(pathLocation);
 
@@ -112,6 +113,13 @@ public class AutoClickerMain {
 					JIntellitype.getInstance().unregisterHotKey(REDOTIMER);
 					JIntellitype.getInstance().unregisterHotKey(EXIT);
 					JIntellitype.getInstance().cleanUp();
+					try {
+						File file = new File(System.getProperty("java.io.tmpdir")+"JIntellitype.dll");
+						//System.out.println(file.toString());
+						Files.deleteIfExists(file.toPath());
+					} catch (IOException e) {
+						//System.err.println("Temporary dll already removed");
+					}
 					System.out.println("Good-bye");
 					System.exit(0);
 				}
