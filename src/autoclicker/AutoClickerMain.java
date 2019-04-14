@@ -10,7 +10,7 @@ import com.melloware.jintellitype.IntellitypeListener;
 import com.melloware.jintellitype.JIntellitype;
 
 
-public class Main {
+public class AutoClickerMain {
 
 	
 	public static boolean isPaused = true;
