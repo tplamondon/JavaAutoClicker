@@ -158,6 +158,7 @@ public class AutoClickerMain {
 		while(true){
 			if(isPaused == false){
 				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+				robot.delay(5);// keep this to prevent problems with clicking too fast
 				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 				robot.delay(msPauseTime);
 			}
