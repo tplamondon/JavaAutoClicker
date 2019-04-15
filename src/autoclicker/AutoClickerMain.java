@@ -21,11 +21,13 @@ public class AutoClickerMain {
 
 	
 	public static boolean isPaused = true;
+	public static boolean allowSpace = true;
 	public static int msPauseTime = -1;
 	
 	public static final int PAUSE = 1;
 	public static final int REDOTIMER = 2;
 	public static final int EXIT = 3;
+	public static final int SPACEPAUSE = 4;
 	
 	public static Robot robot = null;
 	public static Scanner scanner = new Scanner(System.in);
@@ -99,7 +101,10 @@ public class AutoClickerMain {
 			public void onHotKey(int aIdentifier) {
 				if(aIdentifier == PAUSE){
 					isPaused = invertBoolean(isPaused);
-				}	
+				}
+				if(aIdentifier == SPACEPAUSE && allowSpace == true){
+					isPaused = invertBoolean(isPaused);
+				}
 				if(aIdentifier == REDOTIMER){
 					if(isPaused == true){
 						getTimerUpdated();
@@ -131,7 +136,11 @@ public class AutoClickerMain {
 			public void onIntellitype(int aCommand) {
 		        switch (aCommand) {
 		            case JIntellitype.APPCOMMAND_MEDIA_PLAY_PAUSE:
-		            	isPaused = invertBoolean(isPaused);
+		            	//isPaused = invertBoolean(isPaused);
+		            	if(isPaused == true){//only allow if we're paused
+		            		allowSpace = invertBoolean(allowSpace);
+		            		System.out.println("Adjusted if space pauses/unpauses autoclicker");
+		            	}
 		                break;
 		            case JIntellitype.MOD_WIN: //same as APPCOMMAND_VOLUME_MUTE?a
 		            	break;
@@ -144,7 +153,7 @@ public class AutoClickerMain {
 		
 		//JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_WIN, 'O');
 		JIntellitype.getInstance().registerHotKey(PAUSE, JIntellitype.MOD_CONTROL + JIntellitype.MOD_ALT, 'P');	
-		JIntellitype.getInstance().registerHotKey(PAUSE, 0, ' ');	
+		JIntellitype.getInstance().registerHotKey(SPACEPAUSE, 0, ' ');	
 		JIntellitype.getInstance().registerHotKey(REDOTIMER, JIntellitype.MOD_CONTROL + JIntellitype.MOD_ALT, 'O');	
 		JIntellitype.getInstance().registerHotKey(EXIT, JIntellitype.MOD_CONTROL + JIntellitype.MOD_ALT, 'X');	
 		
