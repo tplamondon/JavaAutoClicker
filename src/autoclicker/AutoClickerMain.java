@@ -25,6 +25,8 @@ public class AutoClickerMain {
 	public static final int EXIT = 3;
 	public static final int SPACEPAUSE = 4;
 	
+	public static boolean isTyper = false;
+	
 	public static Robot robot = null;
 	public static Scanner scanner = new Scanner(System.in);
 	
@@ -177,24 +179,17 @@ public class AutoClickerMain {
 	}
 	
 	public static void getTimerUpdated(){
-		System.out.println("Please enter the delay in ms (>0)");
-		boolean shouldContinue = true;
 		int a = -1;
-		while(shouldContinue == true){
-			if(scanner.hasNextInt() == true){
-				shouldContinue = false;
-				a = scanner.nextInt();
-				if(a<=0){
-					shouldContinue=true;
-					System.out.println("Please enter the delay in ms (>0)");
-				}
-			}
-			else{
-				System.out.println("Please enter the delay in ms (>0)");
-				shouldContinue = true;
+		
+		while(a <= 0) {
+			System.out.println("Please enter the delay in ms (>0)");
+			if(!scanner.hasNextInt()) {
 				scanner.next();
-			}
+				continue;
+			}		
+			a = scanner.nextInt();
 		}
+		
 		System.out.println("Thank you");
 		msPauseTime=a;
 	}
@@ -208,12 +203,14 @@ public class AutoClickerMain {
 		}
 		
 		if(a.equalsIgnoreCase("c")) {
+			isTyper = false;
 			//Go to the auto-clicker
 			setupHotkeys();
 			clicker();
 		}
 		else if(a.equalsIgnoreCase("t")) {
 			// Go to the auto-typer
+			isTyper = true;
 			setupHotkeys();
 		}
 		else {
