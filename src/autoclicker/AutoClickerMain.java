@@ -52,30 +52,11 @@ public class AutoClickerMain {
 		//TODO: Start from here
 		chooseAuto();
 		
-		getTimerUpdated();
+		
 		//robot.setAutoDelay(msPauseTime);
 		
 		
-		
-		
-		while(true){
-			if(isPaused == false){
-				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-				robot.delay(5);// keep this to prevent problems with clicking too fast
-				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-				robot.delay(msPauseTime);
-			}
-			else{
-				//Need this in otherwise it doesn't seem to be able to pause/unpause at this stage
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		
+
 		
 	}//end main method
 	
@@ -146,6 +127,48 @@ public class AutoClickerMain {
 		System.out.println("CTRL+ALT+X to exit");
 	}
 	
+	public static void clicker() {
+		getTimerUpdated();
+		while(true){
+			if(isPaused == false){
+				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+				robot.delay(5);// keep this to prevent problems with clicking too fast
+				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+				robot.delay(msPauseTime);
+			}
+			else{
+				//Need this in otherwise it doesn't seem to be able to pause/unpause at this stage
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public static void typer() {
+		getTimerUpdated();
+		while(true){
+			if(isPaused == false){
+				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+				robot.delay(5);// keep this to prevent problems with clicking too fast
+				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+				robot.delay(msPauseTime);
+			}
+			else{
+				//Need this in otherwise it doesn't seem to be able to pause/unpause at this stage
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	public static boolean invertBoolean(boolean x){
 		if(x==true){
 			return false;
@@ -187,6 +210,7 @@ public class AutoClickerMain {
 		if(a.equalsIgnoreCase("c")) {
 			//Go to the auto-clicker
 			setupHotkeys();
+			clicker();
 		}
 		else if(a.equalsIgnoreCase("t")) {
 			// Go to the auto-typer
