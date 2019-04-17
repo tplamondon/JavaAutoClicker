@@ -70,7 +70,7 @@ public class AutoClickerMain {
 			public void onHotKey(int aIdentifier) {
 				if(aIdentifier == PAUSE && programPressed==false){
 					isPaused = invertBoolean(isPaused);
-					//System.out.println("Paused/Unpaused");
+					System.out.println("Paused/Unpaused");
 				}
 				if(isTyper == false) {
 					if(aIdentifier == SPACEPAUSE && allowSpace == true){
@@ -170,6 +170,7 @@ public class AutoClickerMain {
 		String sentence = "";
 		sentence = scanner.nextLine();
 		System.out.println();
+		System.out.println("Thank you");
 
 
 		while(true){
