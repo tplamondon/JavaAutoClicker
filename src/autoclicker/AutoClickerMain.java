@@ -166,6 +166,8 @@ public class AutoClickerMain {
 		System.out.println("Please enter the sentence to be auto-typed");
 		String sentence = "";
 		sentence = scanner.nextLine();
+		System.out.println();
+
 
 		while(true){
 			if(isPaused == false){
@@ -176,6 +178,8 @@ public class AutoClickerMain {
 					type(c);
 				}
 				robot.keyPress(KeyEvent.VK_ENTER);
+				robot.keyRelease(KeyEvent.VK_ENTER);
+				
 				robot.delay(msPauseTime);
 			}
 			else{
