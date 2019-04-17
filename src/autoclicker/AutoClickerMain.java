@@ -184,7 +184,12 @@ public class AutoClickerMain {
 				robot.keyPress(KeyEvent.VK_ENTER);
 				robot.keyRelease(KeyEvent.VK_ENTER);
 				
-				robot.delay(msPauseTime);
+				int delayTime = msPauseTime;
+				while(delayTime > 60000){
+					robot.delay(60000);
+					delayTime -=60000;
+				}
+				robot.delay(delayTime);
 			}
 			else{
 				//Need this in otherwise it doesn't seem to be able to pause/unpause at this stage
