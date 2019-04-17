@@ -21,6 +21,8 @@ public class AutoClickerMain {
 	public static boolean allowSpace = true;
 	public static int msPauseTime = -1;
 	
+	public static boolean programPressed = false;
+	
 	public static final int PAUSE = 1;
 	public static final int REDOTIMER = 2;
 	public static final int EXIT = 3;
@@ -66,8 +68,9 @@ public class AutoClickerMain {
 	public static void setupHotkeys() {
 		JIntellitype.getInstance().addHotKeyListener(new HotkeyListener(){
 			public void onHotKey(int aIdentifier) {
-				if(aIdentifier == PAUSE){
+				if(aIdentifier == PAUSE && programPressed==false){
 					isPaused = invertBoolean(isPaused);
+					//System.out.println("Paused/Unpaused");
 				}
 				if(isTyper == false) {
 					if(aIdentifier == SPACEPAUSE && allowSpace == true){
@@ -213,7 +216,7 @@ public class AutoClickerMain {
         case 'm': type(KeyEvent.VK_M); break;
         case 'n': type(KeyEvent.VK_N); break;
         case 'o': type(KeyEvent.VK_O); break;
-        case 'p': type(KeyEvent.VK_P); break;
+        case 'p': programPressed=true; type(KeyEvent.VK_P); programPressed=false; break;
         case 'q': type(KeyEvent.VK_Q); break;
         case 'r': type(KeyEvent.VK_R); break;
         case 's': type(KeyEvent.VK_S); break;
@@ -307,6 +310,7 @@ public class AutoClickerMain {
 	public static void type(int keyCode) {
 		try{
 	        robot.keyPress(keyCode);
+	        robot.delay(1);
 	        robot.keyRelease(keyCode);
 	    }
 	    catch(Exception e){
