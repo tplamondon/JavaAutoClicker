@@ -29,48 +29,11 @@ public class AutoClickerMain {
 	public static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		/*InputStream stream = AutoClickerMain.class.getResourceAsStream("/autoclicker/JIntellitype.dll");
-		Path path = Paths.get(System.getProperty("java.io.tmpdir")+"JIntellitype.dll");
-		//System.out.println(stream);
-		//System.out.println(path);
-		try {
-			
-			Files.copy(stream, path, StandardCopyOption.REPLACE_EXISTING);
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		System.out.println("Finished writing dll to disk");
-		
-		//https://www.chilkatsoft.com/java-loadlibrary-windows.asp
-		try {
-			File file = new File(System.getProperty("java.io.tmpdir")+"JIntellitype.dll");
-			String pathLocation = file.getAbsolutePath();
-			System.load(pathLocation);
-
-		} catch (UnsatisfiedLinkError e) {
-			System.err.println("Native code library failed to load.\n" + e);
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			System.exit(1);
-	    }*/
 		
 		// next check to make sure JIntellitype DLL can be found and we are on
 		// a Windows operating System
 		if (!JIntellitype.isJIntellitypeSupported()) {
 			System.err.println("JIntellitype not supported");
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			System.exit(1);
 		}
 		
@@ -79,20 +42,44 @@ public class AutoClickerMain {
 		try {
 			robot = new Robot();
 		} catch (AWTException e) {
-			System.err.println("Problem setting up auto-clicker");
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			System.err.println("Problem setting up auto-program");
 			System.exit(1);
 		}
 
 		System.out.println("Succesfully loaded library");
 		
 
+		//TODO: Start from here
+		chooseAuto();
 		
+		getTimerUpdated();
+		//robot.setAutoDelay(msPauseTime);
+		
+		
+		
+		
+		while(true){
+			if(isPaused == false){
+				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+				robot.delay(5);// keep this to prevent problems with clicking too fast
+				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+				robot.delay(msPauseTime);
+			}
+			else{
+				//Need this in otherwise it doesn't seem to be able to pause/unpause at this stage
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+	}//end main method
+	
+	public static void setupHotkeys() {
 		JIntellitype.getInstance().addHotKeyListener(new HotkeyListener(){
 			public void onHotKey(int aIdentifier) {
 				if(aIdentifier == PAUSE){
@@ -154,32 +141,10 @@ public class AutoClickerMain {
 		JIntellitype.getInstance().registerHotKey(EXIT, JIntellitype.MOD_CONTROL + JIntellitype.MOD_ALT, 'X');	
 		
 		System.out.println("Hotkeys registered");
-		System.out.println("CTRL+ALT+P or space to start/pause the clicker");
+		System.out.println("CTRL+ALT+P or space to start/pause the program");
 		System.out.println("CTRL+ALT+O to redo the timer");
 		System.out.println("CTRL+ALT+X to exit");
-		
-		getTimerUpdated();
-		//robot.setAutoDelay(msPauseTime);
-		while(true){
-			if(isPaused == false){
-				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-				robot.delay(5);// keep this to prevent problems with clicking too fast
-				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-				robot.delay(msPauseTime);
-			}
-			else{
-				//Need this in otherwise it doesn't seem to be able to pause/unpause at this stage
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		
-	}//end main method
+	}
 	
 	public static boolean invertBoolean(boolean x){
 		if(x==true){
@@ -209,6 +174,28 @@ public class AutoClickerMain {
 		}
 		System.out.println("Thank you");
 		msPauseTime=a;
+	}
+	
+	public static void chooseAuto() {
+		String a = "";
+			
+		while( !(a.equalsIgnoreCase("c") || a.equalsIgnoreCase("t") || a.equalsIgnoreCase("exit")) ) {			
+			System.out.println("Please enter 'c' for the auto-clicker, 't' for the auto-typer, or 'exit' to exit the program");
+			a = scanner.nextLine();
+		}
+		
+		if(a.equalsIgnoreCase("c")) {
+			//Go to the auto-clicker
+			setupHotkeys();
+		}
+		else if(a.equalsIgnoreCase("t")) {
+			// Go to the auto-typer
+			setupHotkeys();
+		}
+		else {
+			System.exit(0);
+		}
+		
 	}
 
 }//end class
